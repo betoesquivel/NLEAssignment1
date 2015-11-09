@@ -44,7 +44,7 @@ Not_CS33
 At_IN
 All_RB
 Free_JJ
-Schoo_NP
+School_NN
 ._.
 As_RB
 you've_.
@@ -89,7 +89,7 @@ as_RB
 we_PP
 could_MD
 sell_NN
-hi_JJ
+him_PP
 ._.
 ..._CD
 Mr_NN
@@ -139,7 +139,7 @@ which_WDT
 it_NN
 won't_MD
 of_CS22
-cours_JJ
+course_NN
 ._.
 Even_RB
 better_NN
@@ -181,7 +181,7 @@ technology_NN
 in_CD
 someone_PN
 else's_.
-schoo_NP
+school_NN
 ._.
 How_WRB
 exciting_JJ
@@ -213,7 +213,7 @@ very_JJ
 heart_NN
 of_CS22
 the_DT
-schoo_NP
+school_NN
 ._.
 Who_NP
 knows_VBZ
