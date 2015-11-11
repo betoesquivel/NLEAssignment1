@@ -40,7 +40,9 @@ my $currency = qr/(?<currency>(euros?|pounds|dollars|kroner))/;
 
 my $re_currency_wo_symbol = qr/${amount}${m_bn_p}?\s${currency}/;
 
-# 4.3 Final regular expression
+# 4.3 Capture points... $Amount+p
+
+# 4.4 Final regular expression
 my $regex = qr/($re_currency_w_symbol|$re_currency_wo_symbol)/;
 
 # 5) Find matches
