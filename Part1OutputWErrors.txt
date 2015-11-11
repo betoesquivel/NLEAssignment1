@@ -1,7 +1,7 @@
-Papering_???      E! Modified noun into verb is not recognized.
+Papering_???       E! Modified noun into verb is not recognized.
 Cracks_NNS
-..._CD            E! Identifies ... as numeral or cardinal.
-                     Should be a sentence terminator.
+..._CD             E! Identifies ... as numeral or cardinal.
+                      Should be a sentence terminator.
 Precisely_RB
 zero_NN
 "_"
@@ -12,20 +12,21 @@ tax_NN
 "_"
 Osborne_NP
 &_.
-Little_DT         E! This is a proper noun. Not a determiner/pronoun, singular.
-reported_JJ       E! This is a verb, not an adjective.
+Little_DT          E! This is a proper noun. Not a determiner/pronoun, singular.
+reported_JJ        E! This is a verb, not an adjective.
 a_DT
 pre-tax_JJ
 profit_NN
 of_CS22
-£_.
-722,000_CD
+£722_.
+,_,
+0_CD
+0_CD
+0_CD
 on_IN
 turnover_NN
 of_CS22
-£_.               E! I suggest that this is an error, because this should be marked
-                     as currency symbol or as itself.
-34m_CD
+£34m_.
 and_CC
 incurred_VBN
 a_DT
@@ -33,8 +34,11 @@ corporation_NN
 tax_NN
 charge_NN
 of_CS22
-£_.
-179,000_CD
+£179_.
+,_,
+0_CD
+0_CD
+0_CD
 ._.
 But_CC
 the_DT
@@ -44,7 +48,9 @@ the_DT
 year_NN
 to_TO
 March_NN
-2015_CD
+2_CD
+0_CD
+15_CD
 show_NN
 it_NN
 ended_VBD
@@ -64,7 +70,7 @@ company_NN
 was_BEDZ
 able_JJ
 to_TO
-claim_NN           E! This is used as a verb and not a noun.
+claim_NN
 for_CS
 "_"
 timing_NN
@@ -74,25 +80,28 @@ from_IN
 previous_JJ
 years_NNS
 that_DT
-offset_JJ          E! Again, this is a verb and not an adjective.
+offset_JJ
 the_DT
-£_.
-179,000_CD
+£179_.
+,_,
+0_CD
+0_CD
+0_CD
 ._.
 In_CD
 fact_NN
 ,_,
 Osborne_NP
-&_.                E! Not a sentence terminator, but a conjunction.
-Little_DT          E! This is a noun, and not a determinant.
+&_.
+Little_DT
 has_HVZ
 not_CS33
 had_HVD
 to_TO
-pay_NN             E! Verb read as noun again.
+pay_NN
 any_DT
 UK_NP
-corporation_NN     E! It could be argued that this is an adjective not a NN.
+corporation_NN
 tax_NN
 for_CS
 the_DT
@@ -106,7 +115,7 @@ claimed_VBD
 variously_RB
 for_CS
 "_"
-capital_NN         E! Same, this is used as an adjective and not a NN.
+capital_NN
 allowances_NNS
 "_"
 ,_,
@@ -130,16 +139,23 @@ a_DT
 total_JJ
 of_CS22
 over_RB
-£_.
-200m_CD
-in_CD              E! This is a preposition or a Conjunction coordinating, not CD.
+£2_.
+0_CD
+0_CD
+m_NN
+in_CD
 sales_NN
 between_RB
 April_NP
-2008_CD
+2_CD
+0_CD
+0_CD
+8_CD
 and_CC
 March_NN
-2015_CD
+2_CD
+0_CD
+15_CD
 ._.
 Osborne_NP
 &_.
@@ -151,14 +167,20 @@ corporation_NN
 tax_NN
 credit_NN
 of_CS22
-£_.
-12,000_CD
+£12_.
+,_,
+0_CD
+0_CD
+0_CD
 in_CD
 the_DT
 year_NN
 to_TO
 March_NN
-2010_CD
+2_CD
+0_CD
+1_CD
+0_CD
 ,_,
 and_CC
 the_DT
@@ -168,7 +190,7 @@ it_NN
 handed_VBD
 over_RB
 any_DT
-corporation_NN
+corporation_NN     Here
 tax_NN
 was_BEDZ
 for_CS
@@ -176,11 +198,14 @@ the_DT
 year_NN
 ending_NN
 March_NN
-2008_CD
+2_CD
+0_CD
+0_CD
+8_CD
 ._.
 And_CC
 some_DT
-wonder_NN          E! Verb interpreted as noun.
+wonder_NN
 why_WRB
 the_DT
 Treasury's_.
