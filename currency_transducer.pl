@@ -7,6 +7,7 @@ use open IN => ":encoding(utf8)", OUT => ":utf8";
 
 use LWP::Simple;
 use HTML::TreeBuilder::XPath;
+our $xml;
 
 sub scrape_bbc_for_story
 {
@@ -103,9 +104,13 @@ sub extract_currency
     $modifier = $modifier // '';
     $determined_currency = $determined_currency // '';
 
-    print_unformatted_currency($determined_currency, $symbol,
-                               $money, $modifier);
-    print_currency_as_xml($determined_currency, $money, $modifier);
+    if (defined $xml){
+      print_currency_as_xml($determined_currency, $money, $modifier);
+    }else {
+      print_unformatted_currency($determined_currency, $symbol,
+                                 $money, $modifier);
+    }
+    print "\n";
     undef $determined_currency;
     undef $symbol;
     undef $modifier;
@@ -125,21 +130,37 @@ sub print_unformatted_currency
 # to output an xml version of the currency.
 sub print_currency_as_xml
 {
-  print
-  "<PRICE>
+print
+"<PRICE>
 <CURRENCY>$_[0]</CURRENCY>
 <AMOUNT>$_[1]$_[2]</AMOUNT>
-</PRICE>\n\n";
+</PRICE>\n";
 }
 
 # MAIN THREAD
+print "======================== CURRENCY PARSER =========================\n";
 print "Welcome to the currency parser!\n";
 print "Send a file as a parameter or allow me to scrape a bbc website.\n";
+print "Send -xml as a parameter at the end, if you want the output as xml.\n";
+print "Usage: perl currency_transducer.pl <OPTIONAL_FILE_TO_PARSE> -xml\n\n";
+
 if (defined $ARGV[0]) {
-  print "Reading sample text from file $ARGV[0].\n";
-  parse_file_directly($ARGV[0]);
-} else {
-  print "Scraping sample text from UK website.\n";
-  my $story = scrape_bbc_for_story;
-  extract_currency($story);
+  if ($ARGV[0] =~ /-xml/){
+    $xml = 1;
+    if (defined $ARGV[1]) {
+      print "Reading sample text from file $ARGV[1].\n";
+      parse_file_directly($ARGV[1]);
+      exit;
+    }
+  } else {
+    $xml = 1 if defined $ARGV[1];
+    print "Reading sample text from file $ARGV[0].\n";
+    parse_file_directly($ARGV[0]);
+    exit;
+  }
 }
+
+# Only in case there was no file in the arguments.
+print "Scraping sample text from UK website.\n";
+my $story = scrape_bbc_for_story;
+extract_currency($story);
