@@ -103,13 +103,33 @@ sub extract_currency
     $modifier = $modifier // '';
     $determined_currency = $determined_currency // '';
 
-    print "Found a match!\n";
-    print "Currency: $determined_currency\n";
-    print "Amount: $symbol$money$modifier\n\n";
+    print_unformatted_currency($determined_currency, $symbol,
+                               $money, $modifier);
+    print_currency_as_xml($determined_currency, $money, $modifier);
     undef $determined_currency;
     undef $symbol;
     undef $modifier;
   }
+}
+
+# Receives Currency name, symbol, amount, and mn or bn
+# to output an unformatted version of the currency.
+sub print_unformatted_currency
+{
+    print "Found a match!\n";
+    print "Currency: $_[0]\n";
+    print "Amount: $_[1]$_[2]$_[3]\n";
+}
+
+# Receives Currency name, amount, and mn or bn
+# to output an xml version of the currency.
+sub print_currency_as_xml
+{
+  print
+  "<PRICE>
+<CURRENCY>$_[0]</CURRENCY>
+<AMOUNT>$_[1]$_[2]</AMOUNT>
+</PRICE>\n\n";
 }
 
 # MAIN THREAD
