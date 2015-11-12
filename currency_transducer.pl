@@ -1,3 +1,11 @@
+#!/usr/bin/env perl
+# The following script requires LWP::Simple and HTML::TreeBuilder::XPath
+# for the web scraping of the bbc websites.
+# If you don't want to install them, you can just remove the parts
+# that have to deal with the scraping, and the code will end up being
+# just the parse_file_drectly, build_regex, and extract_currency functions.
+# Also, the commandline options would have to be removed, so that it always
+# parsed the file directly.
 use strict;
 use warnings;
 use utf8;
