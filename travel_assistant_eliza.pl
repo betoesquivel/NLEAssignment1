@@ -35,9 +35,9 @@ sub chat
 {
   my $re_weekday     = qr/(?<weekday>tuesday|monday|wednesday|thursday|friday|saturday|sunday)/i;
   my $re_clocktime   = qr/(?<clocktime>\d{1,2}(:\d{2})?\s*?(pm|am))/i;
+  my $re_dayno       = qr/(?<dayno>\b\d{1,2}\d(?!(pm|am)))/i;
 
-  my $re_dayno       = qr/(?<dayno>\d{1,2})/;
-  my $re_day         = qr/(?<day>$re_dayno|tomorrow|next week|the\sday\safter\stomorrow|(next)?\s$re_weekday)/;
+  my $re_day         = qr/(?<day>tomorrow|next week|the\sday\safter\stomorrow|(next)?\s$re_weekday)/;
   my $re_month       = qr/(?<month>january|february|march|april|may|june|july|august|september|october|november|december)/i;
   my $re_year        = qr/(?<year>\d{4})/;
   my $re_time_in_the = qr/(?<t_in_the>morning|afternoon|evening)/i;
@@ -45,13 +45,13 @@ sub chat
   my $re_time_at     = qr/(?<t_at>night|$re_clocktime)/i;
   my $re_stations    = $_[0]; #contains all stations extracted from a file with the website
 
-  my $re_terminators = qr/(good bye|thank you|bye|bye bye)/i;
-  my $re_positive = qr/(yes|yeah|please|yup|aha|correct|right)/i;
-  my $re_negative = qr/(no|nope|nop|nah|wrong|incorrect)/i;
+  my $re_terminators = qr/\b(good bye|thank you|bye|bye bye)\b/i;
+  my $re_positive = qr/\b(yes|yeah|please|yup|aha|correct|right)\b/i;
+  my $re_negative = qr/\b(no|nope|nop|nah|wrong|incorrect)\b/i;
 
 
-  print "Hi, my name is Eliza, your personal Greater Anglia travel assistant.\n";
-  print "With what can I help you with?\n";
+  print "Eliza >. Hi, my name is Eliza, your personal Greater Anglia travel assistant.\n";
+  print "Eliza >. With what can I help you with?\n>. ";
 
   my $p_destination;
   my $p_time;
@@ -60,11 +60,11 @@ sub chat
   my $destination = '';
   my $time = '';
   my $day = '';
+  my $month, my $year;
   while (<STDIN>) {
     # check for places in input
     if (/$re_stations/) {
       $destination = $1;
-      print "Found destination: $destination\n";
     }
     # check for timing information in input
     if (/($re_time_in_the|$re_time|$re_time_at)/){
@@ -73,40 +73,53 @@ sub chat
       $time = " at $+{t_at}"         if defined $+{t_at};
     }
     # check for day information in input
-    if (/$re_day/){
-      $day = " $+{day}";
-      $day .= " on the $+{dayno}" if defined $+{dayno};
+    if (/($re_day|$re_dayno)/){
+      $day = " $+{day}" if defined $+{day};
+      if (/$re_dayno/) {
+        $day .= " on the $+{dayno}";
+      }
     }
     if (/$re_month/){
-      $day =~ s/$re_dayno/ on the $+{dayno} $+{month}/;
+      $month = $+{month};
+      if ($day =~ /.+/) {
+        $day = "$day $month";
+      }else {
+        $day = " $month";
+      }
     }
     if (/$re_year/){
-      $day =~ s/.*($re_dayno|$re_month|$re_dayno\s$re_month)/on the $+{dayno} $+{month}, $+{year}/;
+      $year = $+{year};
+      if ($day =~ /.+/) {
+        $day = " $day, $year";
+      }else {
+        $day = " $year";
+      }
     }
 
     if ($destination =~ /.+/) {
-      print "Do you want me to check availability for tickets to $destination$day$time?\n";
+      print "Eliza >. Do you want me to check availability for tickets to $destination$day$time?\n>. ";
       if (<STDIN>=~$re_positive) {
-        print "I am sorry but unfortunately there are no tickets available due to weather conditions.\n";
+        print "Eliza >. I am sorry but unfortunately there are no tickets available due to weather conditions.\n";
       }else {
-        print "I am sorry to hear that.\n";
+        print "Eliza >. I am sorry to hear that.\n";
       }
-      print "Is there anything else I can help you with?\n";
+      print "Eliza >. Is there anything else I can help you with?\n>. ";
       if (<STDIN>=~$re_negative) {
-        print "Ok, thank you for choosing Greater Anglia travel.\n";
-        print "Good bye\n";
+        print "Eliza >. Ok, thank you for choosing Greater Anglia travel.\n";
+        print "Eliza >. Good bye\n";
         exit;
       }else {
         $destination = '';
         $day = '';
         $time = '';
+        print "Eliza >. How can I help?\n>. ";
       }
     }else {
-      print "I am here to help you only with your train tickets booking, please give me a destination.\n";
-    }
-    if (/$re_terminators/){
-      print "Thank you for choosing Greater Anglia travel.\n";
-      exit;
+      if (/$re_terminators/){
+        print "Eliza >. Thank you for choosing Greater Anglia travel.\n";
+        exit;
+      }
+      print "Eliza >. I am sorry, I am only here to book train tickets for Greater Anglia. Shhh! My boss is watching.\n>. ";
     }
 
     # Check if I have enough information to book a ticket
