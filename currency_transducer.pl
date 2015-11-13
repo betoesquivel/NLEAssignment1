@@ -1,6 +1,8 @@
 #!/usr/bin/env perl
+# Registration Number: 1500921
 # The following script requires LWP::Simple and HTML::TreeBuilder::XPath
 # for the web scraping of the bbc websites.
+#
 # If you don't want to install them, you can just remove the parts
 # that have to deal with the scraping, and the code will end up being
 # just the parse_file_drectly, build_regex, and extract_currency functions.
@@ -9,6 +11,9 @@
 use strict;
 use warnings;
 use utf8;
+# Source: In order to handle utf8 IO, mainly with currency, this question
+# from stackoverflow was consulted.
+# https://stackoverflow.com/questions/4180316/how-do-i-recognise-currency-symbols-in-perl
 use charnames qw[ :full ];
 binmode STDOUT, ":utf8";
 use open IN => ":encoding(utf8)", OUT => ":utf8";
@@ -17,6 +22,9 @@ use LWP::Simple;
 use HTML::TreeBuilder::XPath;
 our $xml;
 
+# tutorial for web scraping with perl:
+# 1) https://www.youtube.com/watch?v=yh43Dp6gzwk
+# 2) https://www.youtube.com/watch?v=CpHD602KIhE
 sub scrape_bbc_for_story
 {
   my $URL = "http://www.bbc.co.uk/news/business-34664777";
@@ -49,6 +57,12 @@ sub parse_file_directly
 
 # 4) Build regular expression
 # Returns a regular expression that can id currency (pounds, dollars, kroner)
+#
+# Source:
+# Regular expression was designed personally, but the special perl regular
+# expression techniques like splitting a big complex regex into multiple
+# simpler one, as well as named groups were found by reading the perldocs.
+# http://perldoc.perl.org/perlre.html
 sub build_regex
 {
   # 4.1 Named groups when a Symbol is matched
@@ -72,6 +86,11 @@ sub build_regex
 
 # 5) Find matches
 # Receives a string and prints all currency data found there
+#
+# Source:
+# Again, simple techniques, such as the usage of named currency symbols
+# instead of inputting the character where extracted from the perl docs.
+# http://perldoc.perl.org/perlre.html
 sub extract_currency
 {
   my $regex = build_regex;
