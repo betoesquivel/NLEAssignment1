@@ -1,0 +1,27 @@
+======================== CURRENCY PARSER =========================
+Welcome to the currency parser!
+Send a file as a parameter or allow me to scrape a bbc website.
+Send -xml as a parameter at the end, if you want the output as xml.
+Usage: perl currency_transducer.pl <OPTIONAL_FILE_TO_PARSE> -xml
+
+Scraping sample text from UK website.
+<PRICE>
+<CURRENCY>euros</CURRENCY>
+<AMOUNT>6bn</AMOUNT>
+</PRICE>
+
+<PRICE>
+<CURRENCY>pounds</CURRENCY>
+<AMOUNT>4.3bn</AMOUNT>
+</PRICE>
+
+<PRICE>
+<CURRENCY>euros</CURRENCY>
+<AMOUNT>3.8bn</AMOUNT>
+</PRICE>
+
+<PRICE>
+<CURRENCY>euros</CURRENCY>
+<AMOUNT>5.8bn</AMOUNT>
+</PRICE>
+

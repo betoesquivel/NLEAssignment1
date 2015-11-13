@@ -55,7 +55,7 @@ sub build_regex
   my $Symbol = qr/(?<symbol>\p{Sc})/;
   my $S_amount = qr/(?<s_amount>(\d+|\d{1,3},\d{3})(\.\d+)?)/;
   my $S_m_bn = qr/(?<s_m_bn>(m|bn))/;
-  my $S_currency = qr/(?<s_currency>(euros?|pounds|dollars|kroner))/;
+  my $S_currency = qr/(?<s_currency>(euros?|pounds|dollars|kroner))/i;
 
   my $re_currency_w_symbol = qr/${Symbol}${S_amount}${S_m_bn}?(\s${S_currency})?/;
 
@@ -113,7 +113,7 @@ sub extract_currency
     $determined_currency = $determined_currency // '';
 
     if (defined $xml){
-      print_currency_as_xml($determined_currency, $money, $modifier);
+      print_currency_as_xml(uc($determined_currency), $money, $modifier);
     }else {
       print_unformatted_currency($determined_currency, $symbol,
                                  $money, $modifier);
