@@ -31,11 +31,19 @@ sub build_regex_from_array
   return qr/($alternated_stations)/
 }
 
+sub random_response
+{
+  my $min = 1;
+  my $max = 10;
+  my $rand = int($min + rand($max - $min));
+  return $rand <= 5 ? 0 : 1;
+}
+
 sub chat
 {
   my $re_weekday     = qr/(?<weekday>tuesday|monday|wednesday|thursday|friday|saturday|sunday)/i;
-  my $re_clocktime   = qr/(?<clocktime>\d{1,2}(:\d{2})?\s*?(pm|am))/i;
-  my $re_dayno       = qr/(?<dayno>\b\d{1,2}\d(?!(pm|am)))/i;
+  my $re_clocktime   = qr/(?<clocktime>\b\d{1,2}(:\d{2})?\s*(pm|am)\b)/i;
+  my $re_dayno       = qr/(?<dayno>\b\d{1,2}\d(?!(\s{0,3}(pm|am)))\b)/i;
 
   my $re_day         = qr/(?<day>tomorrow|next week|the\sday\safter\stomorrow|(next)?\s$re_weekday)/;
   my $re_month       = qr/(?<month>january|february|march|april|may|june|july|august|september|october|november|december)/i;
@@ -99,7 +107,15 @@ sub chat
     if ($destination =~ /.+/) {
       print "Eliza >. Do you want me to check availability for tickets to $destination$day$time?\n>. ";
       if (<STDIN>=~$re_positive) {
-        print "Eliza >. I am sorry but unfortunately there are no tickets available due to weather conditions.\n";
+        if (random_response) {
+          print "Eliza >. I am not allowed to book tickets yet, but this is the point where I would ask for your payment details.\n";
+        }else {
+          if (random_response) {
+            print "Eliza >. I am sorry but unfortunately there are no tickets available due to weather conditions.\n";
+          }else{
+            print "Eliza >. All of our trains are down due to a service outage. Service must be restored soon.\n";
+          }
+        }
       }else {
         print "Eliza >. I am sorry to hear that.\n";
       }
